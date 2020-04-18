@@ -9,7 +9,7 @@
 </head>
 <body>
  	<div class="flexContainer flexCenter">
- 		<form class="solidForm" action="login" method="post">
+ 		<form class="solidForm" id="frm" action="login" method="post" onsubmit="return submitChk()">
  			<div class = "marBottom10">
  				<input type="text" name="u_id" placeholder="아이디">
  			</div>
@@ -42,7 +42,21 @@
  				<input type="submit" value="회원가입">
  				<a href="/join">회원가입</a>		
  			</div>
+ 			<div id="msg"></div>
  		</form>
  	</div>
+ 	
+ 	<script>
+ 		function submitChk(){
+ 			
+ 			if(frm.u_id.value.length==0){
+ 				msg.innerHTML = '아이디를 입력해 주세요'
+ 				return false
+ 			}
+ 			
+ 			var emailRegExp='/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;'
+
+ 		}
+ 	</script>
 </body>
 </html>
