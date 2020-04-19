@@ -16,7 +16,11 @@ public class LoginSev extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		String u_id = request.getParameter("u_id");
+		String u_pw = request.getParameter("u_pw");
+		
+		System.out.println("u_id : " + u_id);
+		System.out.println("u_pw : " + u_pw);
 	}
 
 }
