@@ -1,0 +1,33 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>디테일</title>
+</head>
+<body>
+	<div>제목: ${detail.title }</div>
+	<div>조회수: ${detail.hits }</div>
+	<div>작성일시: ${detail.r_dt }</div>
+	<div>수정일시: ${detail.m_dt }</div>
+	<div>작성자: ${detail.u_nickname }</div>
+	<div>내용</div>
+	<div>${detail.content }</div>
+	<c:if test="${loginUser.i_user == detail.i_user }">
+		<div>
+			<botton>수정</botton>
+			<botton onclick="clkDelBtn(${detail.i_board})">삭제</botton>	
+		</div>
+	</c:if>
+	<script>
+		function clkDelBtn(i_board) {
+			var result = confirm(i_board + '번 글을 삭제하시겠습니까?')
+			if(result) {
+				location.href = '/boardDel?i_board=' = i_board
+			}
+		}
+	</script>
+</body>
+</html>

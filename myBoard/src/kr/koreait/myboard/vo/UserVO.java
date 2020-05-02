@@ -13,16 +13,6 @@ public class UserVO {
 	private String r_dt;
 	private String m_dt;
 	
-	//BoardRedMod
-	private int i_board;
-	private String title;
-	private String content;
-	private int hits;
-
-	
-	
-	
-	
 	public int getI_user() {
 		return i_user;
 	}
@@ -89,6 +79,4 @@ public class UserVO {
 	public void setM_dt(String m_dt) {
 		this.m_dt = m_dt;
 	}
-	
-	
 }

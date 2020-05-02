@@ -7,17 +7,12 @@
 <title>글쓰기</title>
 </head>
 <body>
-	<body>
 	<div>
-		<form action="/boardRegmod" method="post">			
-			<div><input type="text" name="title" 글쓰기">&nbsp;&nbsp;
-				<a href="/BoardRegMod">글쓰기</a>
-			</div>
-		</form>	
-		<div style="color:red;">
-			${msg}
-		</div>		
+		<form action="/boardRegmod" method="post">
+			<div><input type="text" name="title" placeholder="제목"></div>
+			<div><textarea name="content" placeholder="내용"></textarea></div>
+			<div><input type="submit" value="저장"></div>
+		</form>
 	</div>
-</body>
 </body>
 </html>
