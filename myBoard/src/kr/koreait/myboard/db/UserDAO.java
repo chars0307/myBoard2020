@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import kr.koreait.myboard.vo.UserImgVO;
 import kr.koreait.myboard.vo.UserVO;
 
 public class UserDAO {
@@ -40,6 +41,74 @@ public class UserDAO {
 		
 		return result;
 	}
+	
+	// 파일생성 메소드 _ 메소드명 : regUserImg
+			public static int regUserImg(UserImgVO param) {
+				int result = 0;
+				Connection con = null;
+				PreparedStatement ps = null;
+				String sql = " insert into t_user_img "
+						+ " (i_user, seq, img) "
+						+ " SELECT "
+						+ " ?, ifnull(max(seq), 0) + 1, ? "
+						+ " FROM t_user_img "
+						+ " WHERE i_user = ? ";
+				
+				try {
+					con = DbBrifge.getCon();
+					ps = con.prepareStatement(sql);
+				
+					ps.setInt(1, param.getI_user()); // 첫번째 물음표
+					ps.setString(2, param.getImg()); 	 // 두번째 물음표
+					ps.setInt(3, param.getI_user());		// 세번째 물음표		
+					
+					result = ps.executeUpdate();
+					
+				} catch(Exception e) {
+					e.printStackTrace();
+				} finally {
+					DbBrifge.close(con,  ps);			
+				}
+				
+				return result;
+			}
+			
+//			메소드 생성 _ 메소드명 : getProfileImg
+			public static String getProfileImg(int i_user) {
+				String img = null;
+				Connection con = null;
+				PreparedStatement ps = null;
+				ResultSet rs = null;
+				
+				String sql = " SELECT img FROM t_user_img " + 
+							" WHERE i_user = ? " + 
+							" AND seq = ( " + 
+							" SELECT max(seq) FROM t_user_img " + 
+							" WHERE i_user = ? ) ";
+				
+				try {
+					con = DbBrifge.getCon();
+					ps = con.prepareStatement(sql);
+				
+					ps.setInt(1, i_user); // 첫번째 물음표		 
+					ps.setInt(2, i_user); // 두번째 물음표		
+					
+					rs = ps.executeQuery();
+					while(rs.next()) {
+						img = rs.getString("img");
+					}
+					
+//					result = ps.executeUpdate();
+					
+				} catch(Exception e) {
+					e.printStackTrace();
+				} finally {
+					DbBrifge.close(con,  ps);			
+				}
+				
+				return img;
+			}
+	
 	//0:알수없는 에러발생
 	//1:로긴 성공
 	//2:아이디 없음
@@ -85,25 +154,12 @@ public class UserDAO {
 		
 		return result;
 	}
+		
+		
+		
+		
+		
+	}
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-}
