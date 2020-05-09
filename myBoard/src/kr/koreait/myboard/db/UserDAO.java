@@ -49,19 +49,15 @@ public class UserDAO {
 				PreparedStatement ps = null;
 				String sql = " insert into t_user_img "
 						+ " (i_user, seq, img) "
-						+ " SELECT "
-						+ " ?, ifnull(max(seq), 0) + 1, ? "
-						+ " FROM t_user_img "
-						+ " WHERE i_user = ? ";
+						+ " VALUES "
+						+ " (?, 1, ?) ";
 				
-				try {
+				try {   
 					con = DbBrifge.getCon();
 					ps = con.prepareStatement(sql);
-				
 					ps.setInt(1, param.getI_user()); // 첫번째 물음표
 					ps.setString(2, param.getImg()); 	 // 두번째 물음표
-					ps.setInt(3, param.getI_user());		// 세번째 물음표		
-					
+							
 					result = ps.executeUpdate();
 					
 				} catch(Exception e) {
@@ -82,17 +78,14 @@ public class UserDAO {
 				
 				String sql = " SELECT img FROM t_user_img " + 
 							" WHERE i_user = ? " + 
-							" AND seq = ( " + 
-							" SELECT max(seq) FROM t_user_img " + 
-							" WHERE i_user = ? ) ";
+							" AND seq = 1 ";
 				
 				try {
 					con = DbBrifge.getCon();
 					ps = con.prepareStatement(sql);
-				
+	
 					ps.setInt(1, i_user); // 첫번째 물음표		 
-					ps.setInt(2, i_user); // 두번째 물음표		
-					
+						
 					rs = ps.executeQuery();
 					while(rs.next()) {
 						img = rs.getString("img");
@@ -155,7 +148,28 @@ public class UserDAO {
 		return result;
 	}
 		
+		public static void upUserImgAddSeq(UserImgVO param) {
+			Connection con = null;
+			PreparedStatement ps = null;
 		
+			String sql = " UPDATE t_user_img "
+					+ " SET seq = seq + 1 "
+					+ " WHERE i_user =? "
+					+ " ORDER BY seq DESC ";
+			
+			try {   
+				con = DbBrifge.getCon();
+				ps = con.prepareStatement(sql);
+				ps.setInt(1, param.getI_user()); // 첫번째 물음표
+				ps.executeUpdate(); 	 // 두번째 물음표
+							
+			} catch(Exception e) {
+				e.printStackTrace();
+			} finally {
+				DbBrifge.close(con,  ps);			
+			}
+			
+		}
 		
 		
 		

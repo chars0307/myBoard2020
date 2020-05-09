@@ -13,13 +13,28 @@
 		width: 80%;
 	}
 	
-	th, td {
-		border: 1px solid #000;
+	th, td { border: 1px solid #000; }
+	fontCenter {text-align:center; }
+	pointer { cursor: pointer; }
+	trSelected:hover { background
+		display:flex;
+		justify-content: center;
+	}
+	#pageContainer span:not(:Last-child) {
+		margin-right: 30px;
+	}
+
+
+
 		
 	}
 	.fontCenter {
 		text-align: center;
 	}
+	img {
+	width: 200px;
+	}
+
 </style>
 </head>
 <body>
@@ -40,6 +55,7 @@
 				<th>조회수</th>
 				<th>작성일</th>
 				<th>작성자</th>
+				<th>이미지</th>
 			</tr>
 			
 			<c:forEach var="vo" items="${list}">
@@ -49,8 +65,23 @@
 				<td class="fontCenter">${vo.hits }</td>
 				<td class="fontCenter">${vo.r_dt }</td>
 				<td class="fontCenter">${vo.u_nickname }</td>
+				<td class="fontCenter">
+							
+					<c:if test = "${vo.img != ''}"> 
+					
+					<img src = "/img/${vo.i_user}/${vo.img}">
+					</c:if>
+					
+					<c:if test = "${vo.img == ''}"> 
+					<img src = "/img/No images.jpg">
+					</c:if>
+					
+					
+				</td>
+				
 			</tr>
 			</c:forEach>
+			
 		</table>
 	</div>
 	<script>
